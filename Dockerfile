@@ -24,13 +24,17 @@ COPY ./service .
 
 RUN apk add --no-cache bash curl gcc git go musl-dev
 
-# 执行指令 关闭链接确认
-RUN go env -w GO111MODULE=on \
+RUN echo "Building backend..." \
+    && go env -w GO111MODULE=on \
     # && go env -w GOPROXY=https://goproxy.cn,direct \
     && export PATH=$PATH:/go/bin \
+    && echo "Building backend1" \
     && go install -a -v github.com/go-bindata/go-bindata/...@latest \
+    && echo "Building backend3" \
     && go install -a -v github.com/elazarl/go-bindata-assetfs/...@latest \
+    && echo "Building backend4" \
     && go-bindata-assetfs -o=assets/bindata.go -pkg=assets assets/... \
+    && echo "Building backend5" \
     && go build -o sun-panel --ldflags="-X sun-panel/global.RUNCODE=release -X sun-panel/global.ISDOCKER=docker" main.go
 
 
