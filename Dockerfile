@@ -26,7 +26,7 @@ RUN apk add --no-cache bash curl gcc git go musl-dev
 
 # 执行指令 关闭链接确认
 RUN go env -w GO111MODULE=on \
-    && go env -w GOPROXY=https://goproxy.cn,direct \
+    # && go env -w GOPROXY=https://goproxy.cn,direct \
     && export PATH=$PATH:/go/bin \
     && go install -a -v github.com/go-bindata/go-bindata/...@latest \
     && go install -a -v github.com/elazarl/go-bindata-assetfs/...@latest \
