@@ -25,21 +25,13 @@ COPY ./service .
 RUN apk add --no-cache bash curl gcc git go musl-dev
 
 
-# RUN go env -w GO111MODULE=on \
-#     # && go env -w GOPROXY=https://goproxy.cn,direct \
-#     && export PATH=$PATH:/go/bin \
-#     && go install -a -v github.com/go-bindata/go-bindata/...@latest \
-#     && go install -a -v github.com/elazarl/go-bindata-assetfs/...@latest \
-#     && go-bindata-assetfs -o=assets/bindata.go -pkg=assets assets/... \
-#     && go build -o sun-panel --ldflags="-X sun-panel/global.RUNCODE=release -X sun-panel/global.ISDOCKER=docker" main.go
-
-RUN go env -w GO111MODULE=on
-RUN export PATH=$PATH:/go/bin
-RUN go install -a -v github.com/go-bindata/go-bindata/...@latest
-RUN go install -a -v github.com/elazarl/go-bindata-assetfs/...@latest
-RUN go-bindata-assetfs -o=assets/bindata.go -pkg=assets assets/...
-RUN go build -o sun-panel --ldflags="-X sun-panel/global.RUNCODE=release -X sun-panel/global.ISDOCKER=docker" main.go
-
+RUN go env -w GO111MODULE=on \
+    # && go env -w GOPROXY=https://goproxy.cn,direct \
+    && export PATH=$PATH:/go/bin \
+    && go install -a -v github.com/go-bindata/go-bindata/...@latest \
+    && go install -a -v github.com/elazarl/go-bindata-assetfs/...@latest \
+    && go-bindata-assetfs -o=assets/bindata.go -pkg=assets assets/... \
+    && go build -o sun-panel --ldflags="-X sun-panel/global.RUNCODE=release -X sun-panel/global.ISDOCKER=docker" main.go
 
 
 # run_image
